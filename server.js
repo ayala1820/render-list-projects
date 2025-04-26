@@ -1,28 +1,18 @@
 const express = require('express');
-const axios = require('axios');
+const renderApi = require('@api/render-api');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// הכנס את ה-API Key שלך כאן
-const API_KEY = process.env.rnd_RENDER_APPS_LIST;
-console.log("process.env.rnd_RENDER_APPS_LIST",process.env.rnd_RENDER_APPS_LIST)
+const apiKey = 'rnd_RENDER_APPS_LIST';
+renderApi.auth(apiKey);
 
-app.get('/apps', async (req, res) => {
-    try {
-        const response = await axios.get('/', {
-            headers: {
-                'Authorization': `Bearer ${API_KEY}`,
-                'Content-Type': 'application/json'
-            }
-        });
-        res.json(response.data);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error retrieving apps');
-    }
+app.get('/services', (req, res) => {
+    renderApi.listServices({ includePreviews: 'true', limit: '20' })
+        .then(({ data }) => res.json(data))
+        .catch(err => res.status(500).json({ error: err.message }));
 });
 
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });
