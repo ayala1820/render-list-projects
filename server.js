@@ -6,6 +6,7 @@ const PORT = process.env.PORT || 3000;
 
 // הכנס את ה-API Key שלך כאן
 const API_KEY = process.env.rnd_RENDER_APPS_LIST;
+console.log("process.env.rnd_RENDER_APPS_LIST",process.env.rnd_RENDER_APPS_LIST)
 
 app.get('/apps', async (req, res) => {
     try {
