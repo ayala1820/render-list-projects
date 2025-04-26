@@ -10,7 +10,7 @@ console.log("process.env.rnd_RENDER_APPS_LIST",process.env.rnd_RENDER_APPS_LIST)
 
 app.get('/apps', async (req, res) => {
     try {
-        const response = await axios.get('https://api.render.com/v1/services', {
+        const response = await axios.get('/', {
             headers: {
                 'Authorization': `Bearer ${API_KEY}`,
                 'Content-Type': 'application/json'
